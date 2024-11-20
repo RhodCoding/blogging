@@ -1,0 +1,43 @@
+<div class="blog-container">
+  <div class="header">
+    <h1 class="page-title">Blog Posts</h1>
+    <a routerLink="/create" class="create-button">Create New Post</a>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Loading posts...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Blog Posts -->
+  <div *ngIf="!loading && !error" class="posts-grid">
+    <div *ngFor="let post of posts" class="post-card" (click)="viewPost(post.id)">
+      <div class="post-content">
+        <h2 class="post-title">{{ post.title }}</h2>
+        <p class="post-summary">{{ post.summary }}</p>
+        <div class="post-meta">
+          <div class="author">
+            <i class="fas fa-user"></i>
+            <span>{{ post.author.username }}</span>
+          </div>
+          <div class="date">
+            <i class="fas fa-calendar"></i>
+            <span>{{ post.created_at | date:'mediumDate' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Posts Message -->
+  <div *ngIf="!loading && !error && posts.length === 0" class="no-posts">
+    <p>No blog posts available.</p>
+    <a routerLink="/create" class="create-button">Create Your First Post</a>
+  </div>
+</div>
